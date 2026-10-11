@@ -1,11 +1,10 @@
+import { contact, phoneUrl, whatsappUrl } from "@/lib/contact";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Instagram } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Mail, Phone, MapPin, Instagram, MessageCircle } from "lucide-react";
 
 const formatPhone = (value: string) => {
   // Remove tudo que não for número
@@ -24,7 +23,7 @@ const formatPhone = (value: string) => {
 };
 
 const Contact = () => {
-  const { toast } = useToast();
+  const [feedback, setFeedback] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -36,28 +35,15 @@ const Contact = () => {
     
     // Validation
     if (!formData.name.trim() || !formData.phone.trim() || !formData.message.trim()) {
-      toast({
-        title: "Atenção",
-        description: "Por favor, preencha todos os campos.",
-        variant: "destructive",
-      });
+      setFeedback("Por favor, preencha todos os campos.");
       return;
     }
 
-    // WhatsApp integration
-    const phoneNumberOnly = formData.phone.replace(/\D/g, '');
-    const whatsappMessage = `Olá! Meu nome é ${formData.name}.%0A%0ATelefone: ${phoneNumberOnly}%0A%0AMensagem: ${formData.message}`;
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=5514997938562&text=${whatsappMessage}`;
+    const message = `Olá! Meu nome é ${formData.name.trim()}.\n\nTelefone: ${formData.phone.replace(/\D/g, "")}\n\nMensagem: ${formData.message.trim()}`;
+    window.open(whatsappUrl(message), "_blank", "noopener,noreferrer");
+
+    setFeedback("Finalize o envio da sua mensagem no WhatsApp.");
     
-    window.open(whatsappUrl, "_blank");
-    
-    toast({
-      title: "Redirecionando...",
-      description: "Você será direcionado ao WhatsApp para finalizar o contato.",
-    });
-    
-    // Reset form
-    setFormData({ name: "", phone: "", message: "" });
   };
 
   return (
@@ -75,57 +61,73 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card>
             <CardContent className="p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Nome Completo</Label>
-                  <Input
-                    id="name"
-                    placeholder="Digite seu nome"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Telefone / WhatsApp</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="(00) 00000-0000"
-                    value={formData.phone}
-                    maxLength={15}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, '').slice(0, 11);
-                      setFormData({ ...formData, phone: formatPhone(value) });
-                    }}
-                    onKeyPress={(e) => {
-                      // Permite apenas números
-                      if (!/[0-9]/.test(e.key)) {
-                        e.preventDefault();
-                      }
-                    }}
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="message">Mensagem</Label>
-                  <Textarea
-                    id="message"
-                    placeholder="Descreva o serviço que você precisa..."
-                    rows={5}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    required
-                  />
-                </div>
-                
-                <Button type="submit" variant="hero" size="lg" className="w-full">
-                  <Phone className="w-5 h-5" />
-                  Enviar WhatsApp
-                </Button>
-              </form>
+              <h3 className="text-xl font-bold mb-3">Vamos conversar?</h3>
+              <p className="text-muted-foreground mb-6">Envie uma mensagem ou ligue e conte o que você precisa.</p>
+              <Button asChild variant="hero" size="lg" className="w-full">
+                <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5" /> Falar no WhatsApp
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="w-full mt-3">
+                <a href={phoneUrl}>
+                  <Phone className="w-5 h-5" /> Ligar agora
+                </a>
+              </Button>
+              <details className="mt-6">
+                <summary className="cursor-pointer text-primary font-medium py-2">Prefere preparar uma mensagem?</summary>
+                <p className="text-sm text-muted-foreground my-3">Preencha abaixo e finalize o envio no WhatsApp.</p>
+                <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium" htmlFor="name">Nome Completo</label>
+                    <Input
+                      id="name"
+                      autoComplete="name"
+                      placeholder="Digite seu nome"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium" htmlFor="phone">Telefone / WhatsApp</label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      autoComplete="tel"
+                      inputMode="tel"
+                      pattern="[(][0-9]{2}[)] [0-9]{4,5}-[0-9]{4}"
+                      title="Informe um telefone com DDD, com 10 ou 11 dígitos."
+                      placeholder="(00) 00000-0000"
+                      value={formData.phone}
+                      maxLength={15}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, '').slice(0, 11);
+                        setFormData({ ...formData, phone: formatPhone(value) });
+                      }}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium" htmlFor="message">Mensagem</label>
+                    <Textarea
+                      id="message"
+                      placeholder="Descreva o serviço que você precisa..."
+                      rows={5}
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      required
+                    />
+                  </div>
+
+                  <Button type="submit" variant="hero" size="lg" className="w-full">
+                    <MessageCircle className="w-5 h-5" />
+                    Enviar WhatsApp
+                  </Button>
+                </form>
+              </details>
+              <p role="status" aria-live="polite" className="mt-3 text-sm text-muted-foreground">{feedback}</p>
             </CardContent>
           </Card>
 
@@ -150,12 +152,12 @@ const Contact = () => {
                 <div>
                   <h3 className="font-bold text-lg mb-1">Instagram</h3>
                   <a 
-                    href="https://instagram.com/nascimentoinstalacoes" 
+                    href={`https://instagram.com/${contact.instagram}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-muted-foreground hover:text-primary transition-colors break-all"
                   >
-                    @nascimentoinstalacoes
+                    @{contact.instagram}
                   </a>
                 </div>
               </CardContent>
@@ -167,8 +169,16 @@ const Contact = () => {
                   <Phone className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-1">WhatsApp</h3>
-                  <p className="text-muted-foreground">(14) 99793-8562</p>
+                  <h3 className="font-bold text-lg mb-1">Ligações e WhatsApp</h3>
+                  <a href={phoneUrl} className="text-muted-foreground hover:text-primary">{contact.displayPhone}</a>
+                  <div className="flex flex-wrap gap-x-4 gap-y-2 mt-3">
+                    <a href={phoneUrl} className="inline-flex items-center gap-1 text-primary hover:underline">
+                      <Phone className="w-4 h-4" /> Ligar
+                    </a>
+                    <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-primary hover:underline">
+                      <MessageCircle className="w-4 h-4" /> WhatsApp
+                    </a>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -180,7 +190,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg mb-1">Email</h3>
-                  <p className="text-muted-foreground break-all">nascimentoinstalacoesbauru@gmail.com</p>
+                  <a href={`mailto:${contact.email}`} className="text-muted-foreground hover:text-primary break-all">{contact.email}</a>
                 </div>
               </CardContent>
             </Card>

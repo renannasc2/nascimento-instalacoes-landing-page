@@ -15,12 +15,12 @@ const differentials = [
   {
     icon: MapPin,
     title: "Toda Região",
-    description: "Atendemos Bauru e toda região de SP",
+    description: "Atendemos Bauru e região",
   },
   {
     icon: Award,
     title: "Profissional Qualificado",
-    description: "Equipe técnica qualificada e experiente",
+    description: "Experiência em instalações e manutenção elétrica",
   },
   {
     icon: Shield,
@@ -36,14 +36,14 @@ const differentials = [
 
 const Differentials = () => {
   return (
-    <section className="py-20 px-4 bg-background">
+    <section className="py-12 px-4 bg-background">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center space-y-4 mb-12">
+        <div className="text-center space-y-4 mb-8">
           <h2 className="text-3xl md:text-5xl font-bold text-foreground">
             Por que nos <span className="text-primary">Escolher</span>?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Diferenciais que fazem da Nascimento Instalações a melhor escolha para seus projetos elétricos
+            Experiência, cuidado e atendimento próximo em cada serviço
           </p>
         </div>
 
@@ -55,9 +55,9 @@ const Differentials = () => {
                 key={index}
                 className="border-2 hover:border-primary transition-all duration-300 hover:shadow-lg group"
               >
-                <CardContent className="p-6 space-y-4 text-center">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto group-hover:bg-primary transition-colors">
-                    <Icon className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+                <CardContent className="p-4 space-y-3 text-center">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto group-hover:bg-primary transition-colors">
+                    <Icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
                   <p className="text-muted-foreground">{item.description}</p>

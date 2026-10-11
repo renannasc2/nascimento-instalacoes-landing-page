@@ -1,11 +1,8 @@
+import { whatsappUrl } from "@/lib/contact";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
-  const handleContact = () => {
-    document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   const handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -22,7 +19,7 @@ const Header = () => {
             className="cursor-pointer hover:opacity-80 transition-opacity"
             aria-label="Voltar ao topo"
           >
-            <img src={logo} alt="Nascimento Instalações Elétricas" className="h-12 w-auto" />
+            <img width={447} height={106} src={logo} alt="Nascimento Instalações Elétricas" className="h-10 sm:h-12 w-auto max-w-[48vw]" />
           </button>
         </div>
         <nav className="hidden md:flex items-center gap-6">
@@ -32,12 +29,12 @@ const Header = () => {
           <a href="#servicos" className="text-foreground hover:text-primary transition-colors">
             Serviços
           </a>
-          <Button onClick={handleContact} variant="hero" size="default">
-            Solicitar Orçamento
+          <Button asChild variant="hero" size="default">
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">Solicitar Orçamento</a>
           </Button>
         </nav>
-        <Button onClick={handleContact} className="md:hidden" variant="hero" size="sm">
-          Orçamento
+        <Button asChild className="md:hidden" variant="hero" size="sm">
+          <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">Orçamento</a>
         </Button>
       </div>
     </header>

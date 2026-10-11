@@ -1,24 +1,26 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Dependências e arquivos gerados
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+nascimento-instalacoes-publicacao.zip
 
-node_modules
-dist
-dist-ssr
+# Configuração local
+.env
+.env.*
+!.env.example
 *.local
+.aws/
+.codex/
+.agents/
+.vscode/
+.idea/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Logs e arquivos do sistema
+*.log
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+*.swp
+*.swo
+
+# Commit preparado para transferência local
+nascimento-instalacoes-atualizacoes.bundle

@@ -6,7 +6,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import quadroEletrico from "@/assets/quadro-eletrico.jpg";
 import quadroTelefonia from "@/assets/quadro-telefonia.jpg";
 import paineisSolares from "@/assets/paineis-solares.jpg";
@@ -49,7 +48,7 @@ const services = [
 
 const ServiceCarousel = () => {
   return (
-    <section id="galeria" className="py-20 px-12 md:px-24 bg-muted">
+    <section id="galeria" className="py-14 px-4 md:py-20 bg-muted">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-foreground">
@@ -65,12 +64,7 @@ const ServiceCarousel = () => {
             align: "start",
             loop: true,
           }}
-          plugins={[
-            Autoplay({
-              delay: 4000,
-            }),
-          ]}
-          className="w-full"
+          className="w-full pb-16" aria-label="Serviços elétricos"
         >
           <CarouselContent>
             {services.map((service, index) => (
@@ -79,6 +73,10 @@ const ServiceCarousel = () => {
                   <CardContent className="p-0">
                     <div className="aspect-video overflow-hidden rounded-t-lg">
                       <img
+                        loading="lazy"
+                        decoding="async"
+                        width={640}
+                        height={360}
                         src={service.image}
                         alt={service.title}
                         className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
@@ -95,8 +93,8 @@ const ServiceCarousel = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="left-0 -translate-x-16" />
-          <CarouselNext className="right-0 translate-x-16" />
+          <CarouselPrevious className="left-1/2 top-auto bottom-0 -translate-x-14 translate-y-0" />
+          <CarouselNext className="right-auto left-1/2 top-auto bottom-0 translate-x-2 translate-y-0" />
         </Carousel>
       </div>
     </section>

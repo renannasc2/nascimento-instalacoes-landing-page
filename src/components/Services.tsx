@@ -1,4 +1,4 @@
-import { Home, Building2, Store, Phone, Wrench, Zap } from "lucide-react";
+import { Home, Building2, Store, Phone, Wrench, Zap, Lightbulb } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
@@ -26,6 +26,11 @@ const services = [
     icon: Wrench,
     title: "Manutenção em Geral",
     description: "Reparos e manutenções preventivas e corretivas",
+  },
+  {
+    icon: Lightbulb,
+    title: "Iluminação e Ventiladores",
+    description: "Instalação e troca de luminárias, lâmpadas e ventiladores de teto.",
   },
 ];
 

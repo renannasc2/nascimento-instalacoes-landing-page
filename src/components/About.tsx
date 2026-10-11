@@ -4,7 +4,7 @@ import fotoSobre from "@/assets/foto-sobre.jpg";
 
 const About = () => {
   return (
-    <section id="sobre" className="py-20 px-4 bg-background">
+    <section id="sobre" className="py-14 px-4 md:py-20 bg-background">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center space-y-4 mb-12">
           <div className="inline-flex items-center gap-2 bg-secondary/10 text-secondary-foreground px-4 py-2 rounded-full text-sm font-semibold">
@@ -23,8 +23,12 @@ const About = () => {
           <CardContent className="p-0">
             <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-0">
               {/* Foto do Fundador */}
-              <div className="relative w-full lg:w-auto lg:min-w-[300px] lg:max-w-[400px] aspect-[9/16] lg:aspect-[9/16] overflow-hidden bg-muted">
+              <div className="relative w-full lg:w-auto lg:min-w-[300px] lg:max-w-[400px] aspect-[4/3] lg:aspect-[9/16] overflow-hidden bg-muted">
                 <img 
+                  width={311}
+                  height={743}
+                  loading="lazy"
+                  decoding="async"
                   src={fotoSobre} 
                   alt="Isaias Nascimento - Fundador" 
                   className="w-full h-full object-cover object-center" 
@@ -35,25 +39,26 @@ const About = () => {
               </div>
 
               {/* Texto da História */}
-              <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center space-y-6 bg-background">
+              <div className="p-6 md:p-10 lg:p-12 flex flex-col justify-center space-y-6 bg-background">
                 <div className="space-y-4">
                   <h3 className="text-2xl md:text-3xl font-bold text-foreground">
                     Isaias Nascimento
                   </h3>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    Eu sou Isaias Nascimento. Sempre fui muito empenhado em trabalhar. Como antigamente, 
-                    a gente começava cedo para ajudar em casa, pois éramos muitos irmãos.
+                    Sou Isaias Nascimento. Meu gosto pela elétrica começou aos oito anos, quando,
+                    nas horas de folga, eu acompanhava meu irmão mais velho no trabalho. Com meus
+                    irmãos, fui aprendendo e descobrindo uma vocação que me acompanha
+                    até hoje.
                   </p>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    Minha jornada começou na colheita de café, passei por supermercado e trabalhei em 
-                    feiras livres. Foi na feira que comecei a entrar para o mundo das obras, atuando como 
-                    pintor, pedreiro e marceneiro.
+                    Aos 12 anos, comecei a trabalhar em uma vidraçaria. Depois, passei por um
+                    escritório de contabilidade e por um supermercado. Mas a elétrica sempre fez
+                    parte da minha vida. Peguei gosto pelo ofício e nunca mais saí.
                   </p>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    Hoje, com <strong className="text-foreground">mais de 40 anos de experiência</strong>, 
-                    presto serviços em todas as áreas para casa. Adquiri um conhecimento amplo, mas meu 
-                    foco principal é a elétrica. Além do serviço técnico, meu foco está nas pessoas: meu 
-                    objetivo é sempre prestar um serviço digno, com qualidade e segurança.
+                    Hoje, com <strong className="text-foreground">mais de 40 anos de experiência</strong>,
+                    levo esse cuidado para cada serviço. Meu compromisso é atender as pessoas com
+                    respeito e trabalhar com qualidade e segurança.
                   </p>
                 </div>
 
